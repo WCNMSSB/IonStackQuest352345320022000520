@@ -174,7 +174,6 @@ jobs:
 
           # --- Strategy 4: Downloaded file IS a boot image ---
           ROM_FILE=$(ls rom.* 2>/dev/null | head -1)
-            MAGIC=$(xxd -l 8 -p "$ROM_FILE")
               echo "[*] Downloaded file IS a boot image (ANDROID! magic)"
               cp "$ROM_FILE" boot.img
               echo "source=standalone" >> "$GITHUB_OUTPUT"
