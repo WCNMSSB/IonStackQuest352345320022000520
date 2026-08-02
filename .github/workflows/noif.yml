@@ -167,6 +167,7 @@ jobs:
           if [ -n "$BOOT_IMG" ]; then
             echo "[*] Found init_boot.img: $BOOT_IMG"
             cp "$BOOT_IMG" boot.img
+            cp boot.img $GITHUB_WORKSPACE/
             echo "source=init_boot" >> "$GITHUB_OUTPUT"
             rm -rf rom_out
             exit 0
@@ -187,6 +188,7 @@ jobs:
         run: |
           mkdir -p boot_unpack
           cd boot_unpack
+          cp $GITHUB_WORKSPACE/boot.img ../
 
           echo "[*] Unpacking boot.img ($(du -h ../boot.img | cut -f1)) with magiskboot..."
 
