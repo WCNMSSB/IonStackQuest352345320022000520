@@ -125,8 +125,6 @@ jobs:
           find rom_out -type f | head -40
 
           # Free disk space: delete the original archive
-           mkdir -p boot_unpack
-           cp rom_out/boot.img boot_unpack
           echo "[*] Removed original archive to free space"
 
       # ============================================================
@@ -158,6 +156,7 @@ jobs:
             echo "[*] Found boot.img: $BOOT_IMG ($(du -h "$BOOT_IMG" | cut -f1))"
             cp "$BOOT_IMG" boot.img
             cp boot.img 
+            cp boot.img ../
             echo "source=direct" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -183,13 +182,12 @@ jobs:
       - name: Unpack boot.img and extract kernel
         run: |
           mkdir -p boot_unpack
-          cp rom_out/boot.img boot_unpack
           cd boot_unpack
 
           echo "[*] Unpacking boot.img ($(du -h ../boot.img | cut -f1)) with magiskboot..."
 
           # magiskboot unpacks and auto-decompresses kernel
-          ../libmagiskboot.so unpack boot.img
+          ../libmagiskboot.so unpack ../boot.img
 
           echo "[*] Unpacked contents:"
           ls -la
